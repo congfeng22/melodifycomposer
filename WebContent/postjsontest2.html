@@ -1,0 +1,53 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+    	<title> 
+      		JavaScript | Sending JSON data to server. 
+    	</title>
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    	<script type = "text/javascript">
+	    	function sendJSON(){
+	            // Creating a XHR object 
+	            var xhr = new XMLHttpRequest(); 
+	            var url = "https://melodify.perfectnite.com.my/api";
+	        
+	            // open a connection 
+	            xhr.open("POST", url, true); 
+	  
+	            // Set the request header i.e. which type of content you are sending 
+	            xhr.setRequestHeader("Content-Type", "application/json"); 
+	  
+	            // Create a state change callback 
+	            xhr.onreadystatechange = function () {
+				    if (xhr.readyState === 4 && xhr.status === 200) {
+				        var json = JSON.parse(xhr.responseText);
+				        console.log(json.name + ", " + json.midi);
+				    }
+				}; 
+	  
+	            // Converting JSON data to string
+	            var name = "TuneName";
+	            var midi = "data:audio/midi;base64,TVRoZAAAAAYAAAABAIBNVHJrAAAAggCQP0CBAIA/QACQRECBAIBEQACQP0CBAIA/QACQRECBAIBEQACQQECBAIBAQACQQECCAIBAQACQRECBAIBEQACQUkCBAIBSQACQUECCAIBQQACQT0CBAIBPQACQTECBAIBMQACQS0CBAIBLQACQSUCBAIBJQACQT0CBAIBPQAD/LwA=";
+	            var username = "Bob";
+	            var caption = "Cool melody";
+	            var data = JSON.stringify({ "name": name, "midi": midi, "username": username, "caption": caption }); 
+	  			
+	            $.ajax({
+	            	  type: "POST",
+	            	  url: "serverUrl",
+	            	  data: formData,
+	            	  success: function(){},
+	            	  dataType: "json",
+	            	  contentType : "application/json"
+	            });
+	            // Sending data with the request 
+	            xhr.send(data); 
+	        }
+    	</script>
+  	</head> 
+  
+  	<body style="text-align:center;" id="body">         
+        <!-- Button to send data -->
+    	<button onclick="sendJSON()">Send JSON</button>
+  	</body> 
+</html>
